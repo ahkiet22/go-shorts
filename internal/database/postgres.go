@@ -22,9 +22,8 @@ func GetDatabasePool() *pgxpool.Pool {
 			log.Fatal("Cannot connect DB:", err)
 		}
 		instance = conn
+		log.Println("Database connection pool initialized")
 	})
-
-	log.Println("Database connection pool initialized")
 
 	return instance
 }
