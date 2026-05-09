@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"go-shorts/internal/model"
+	"log"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -11,7 +12,7 @@ type UrlRepository struct {
 	db *pgxpool.Pool
 }
 
-type Repository interface {
+type IUrlRepository interface {
 	Create(u *model.URL) error
 	FindByShortCode(code string) (*model.URL, error)
 	IncreaseClick(code string) error
@@ -31,10 +32,14 @@ func (r *UrlRepository) Create(u *model.URL) error {
 	_, err := r.db.Exec(
 		context.Background(),
 		q,
+		u.ID,
 		u.OriginalURL,
 		u.ShortCode,
 		u.ClicksCount,
+		u.ExpiresAt,
 	)
+
+	log.Printf("Creating URL: %v, error: %v", u, err)
 
 	return err
 }

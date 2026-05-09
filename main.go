@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	const PORT = ":8000"
 	app := fiber.New()
 
 	defer func() {
@@ -27,5 +28,5 @@ func main() {
 
 	database.GetDatabasePool()
 
-	app.Listen(":3000")
+	app.Listen(PORT)
 }
